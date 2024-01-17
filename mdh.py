@@ -50,6 +50,8 @@ def start_shift(playwright: Playwright, end_hour: str, end_minute: str) -> None:
     page.locator("input[name=\"location\"]").fill(LOCATION)
     page.get_by_role("button", name="Done").click()
 
+    print("started shift")
+
     context.close()
     browser.close()
 
@@ -68,6 +70,8 @@ def end_shift(playwright: Playwright) -> None:
 
     page.get_by_role("button", name="End now").click()
     page.get_by_role("button", name="End shift now").click()
+
+    print("ended shift")
 
     context.close()
     browser.close()
