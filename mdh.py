@@ -8,7 +8,7 @@ def start_shift(playwright: Playwright, end_hour: str, end_minute: str) -> None:
     if int(end_hour) > 12:
         end_hour = str(int(end_hour) - 12)
 
-    browser = playwright.chromium.launch(headless=True)
+    browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://beta.mydigitalhand.org/")
@@ -37,12 +37,12 @@ def start_shift(playwright: Playwright, end_hour: str, end_minute: str) -> None:
 
     hrButton.click()
 
-    box = page.get_by_text(str(end_hour)).last().bounding_box()
+    box = page.get_by_text(str(end_hour)).last.bounding_box()
     page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
 
     minButton.click()
 
-    box = page.get_by_text(str(end_minute)).last().bounding_box()
+    box = page.get_by_text(str(end_minute)).last.bounding_box()
     page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
 
     page.get_by_role("button", name="OK").click()
@@ -56,7 +56,7 @@ def start_shift(playwright: Playwright, end_hour: str, end_minute: str) -> None:
     browser.close()
 
 def end_shift(playwright: Playwright) -> None:
-    browser = playwright.chromium.launch(headless=True)
+    browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://beta.mydigitalhand.org/")
@@ -79,7 +79,7 @@ def end_shift(playwright: Playwright) -> None:
 if __name__ == "__main__":
     times = []
 
-    with open("/rushil/auto-mdh/schedule.csv") as f:
+    with open("schedule.csv") as f:
         for line in f:
             if line.startswith("Day"):
                 continue
