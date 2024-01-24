@@ -37,12 +37,12 @@ def start_shift(playwright: Playwright, end_hour: str, end_minute: str) -> None:
 
     hrButton.click()
 
-    box = page.get_by_text(str(end_hour), exact=True).bounding_box()
+    box = page.get_by_text(str(end_hour)).last().bounding_box()
     page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
 
     minButton.click()
 
-    box = page.get_by_text(str(end_minute), exact=True).bounding_box()
+    box = page.get_by_text(str(end_minute)).last().bounding_box()
     page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
 
     page.get_by_role("button", name="OK").click()
@@ -61,9 +61,9 @@ def end_shift(playwright: Playwright) -> None:
     page = context.new_page()
     page.goto("https://beta.mydigitalhand.org/")
     page.locator("input[name=\"email\"]").click()
-    page.locator("input[name=\"email\"]").fill("***REMOVED***")
+    page.locator("input[name=\"email\"]").fill(EMAIL)
     page.locator("input[name=\"password\"]").click()
-    page.locator("input[name=\"password\"]").fill("***REMOVED***")
+    page.locator("input[name=\"password\"]").fill(PASSWORD)
     page.get_by_role("button", name="Sign in").click()
     page.get_by_role("link", name="University of North Carolina").click()
     page.get_by_role("button", name="Waitlist").click()
@@ -79,7 +79,7 @@ def end_shift(playwright: Playwright) -> None:
 if __name__ == "__main__":
     times = []
 
-    with open("schedule.csv") as f:
+    with open("/rushil/auto-mdh/schedule.csv") as f:
         for line in f:
             if line.startswith("Day"):
                 continue
