@@ -1,14 +1,14 @@
 from playwright.sync_api import Playwright, sync_playwright, expect
 from time import sleep
 
-from secrets import PASSWORD, EMAIL, LOCATION
+from secrets import PASSWORD, EMAIL, LOCATION, DEBUG
 
 def start_shift(playwright: Playwright, end_hour: str, end_minute: str) -> None:
     before_noon = int(end_hour) < 12
     if int(end_hour) > 12:
         end_hour = str(int(end_hour) - 12)
 
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=DEBUG)
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://beta.mydigitalhand.org/")
@@ -56,7 +56,7 @@ def start_shift(playwright: Playwright, end_hour: str, end_minute: str) -> None:
     browser.close()
 
 def end_shift(playwright: Playwright) -> None:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=DEBUG)
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://beta.mydigitalhand.org/")
